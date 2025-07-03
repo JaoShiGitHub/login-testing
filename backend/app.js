@@ -1,10 +1,17 @@
 import express from "express";
-
+import register from "./controllers/register.js";
 const app = express();
 const port = 4000;
 
-app.get("/home", (req, res) => {
-  res.send("Welcome Home!");
+app.use(express.json());
+app.post("/register", register);
+
+app.post("/login", (req, res) => {
+  res.send("Login");
+});
+
+app.get("/profile", (req, res) => {
+  res.send("Profile");
 });
 
 app.listen(port, () => {
