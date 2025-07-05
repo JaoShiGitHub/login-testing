@@ -1,4 +1,5 @@
 import express from "express";
+import dotenv from "dotenv";
 // Middleware:
 import { validate_register } from "./middlewares/validations.js";
 // Controllers:
@@ -8,6 +9,7 @@ import auth from "./controllers/auth.js";
 
 const app = express();
 const port = 4000;
+dotenv.config();
 
 app.use(express.json());
 
