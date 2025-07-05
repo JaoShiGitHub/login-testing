@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 // Middleware:
 import { validate_register } from "./middlewares/validations.js";
+import authMiddleware from "./middlewares/auth.js";
 // Controllers:
 import register from "./controllers/register.js";
 import get_user from "./controllers/users.js";
@@ -14,7 +15,7 @@ dotenv.config();
 app.use(express.json());
 
 app.post("/register", [validate_register], register);
-app.post("/login", auth);
+app.post("/login", authMiddleware, auth);
 app.get("/profile", get_user);
 
 app.listen(port, () => {

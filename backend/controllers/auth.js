@@ -3,7 +3,6 @@
 import { pool } from "../utils/db.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import cookieParser from "cookie-parser";
 
 const auth = async (req, res) => {
   const { email, password } = req.body;

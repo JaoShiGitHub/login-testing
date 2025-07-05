@@ -3,6 +3,10 @@ import { pool } from "../utils/db.js";
 const get_user = async (req, res) => {
   const { customer_id } = req.query;
 
+  if (!token) {
+    return res.status(401).json({ message: "No token found" });
+  }
+
   try {
     const user = await pool.query("SELECT * FROM users WHERE id = $1", [
       customer_id,
