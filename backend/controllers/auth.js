@@ -1,7 +1,8 @@
 // For Authentication
-const auth = (req, res, next) => {
-  console.log("Authentication middleware");
-  next();
-};
+
+import { pool } from "../utils/db";
+import bcrypt from "bcrypt";
+
+const auth = (req, res) => {};
 
 export default auth;
