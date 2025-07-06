@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
 
+// This middleware checks if the user is authenticated by verifying the JWT token stored in cookies.
 const authMiddleware = (req, res, next) => {
-  const { token } = req.cookies;
+  const { token } = req.cookies; // This line is used to retrieve a JWT (JSON Web Token) stored in a cookie
 
   if (!token) {
     return res
