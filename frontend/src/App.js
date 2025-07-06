@@ -1,4 +1,4 @@
-import Home from "./pages/Home";
+import Profile from "./pages/Profile";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 
@@ -7,7 +7,7 @@ function App() {
     <div className="App">
       <LoginPage />
       <RegisterPage />
-      <Home />
+      <Profile />
     </div>
   );
 }
