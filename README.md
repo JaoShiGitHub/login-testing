@@ -3,10 +3,11 @@
 ## Note
 
   ### bcrypt
-   * `bcrypt.genSalt` = creates random string
+   * **`bcrypt.genSalt`**:
+     Creates random string
      
-   * `bcrypt.hash` = the random string is used to hash user.password securely   
-   * It is used to hash the password. You never get the original password back — only compare hashes.
+   * **`bcrypt.hash`**:
+     The random string is used to hash user.password securely. It is used to hash the password. You never get the original password back — only compare hashes.
      
   ### Hashing vs Encryption
    * Hashing = one-way (you can’t undo it)
