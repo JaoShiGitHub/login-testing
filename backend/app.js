@@ -9,6 +9,7 @@ import register from "./controllers/register.js";
 import get_user from "./controllers/users.js";
 import auth from "./controllers/auth.js";
 import logout from "./controllers/logout.js";
+import cors from "cors";
 
 const app = express();
 const port = 4000;
@@ -16,6 +17,12 @@ dotenv.config();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
 app.post("/register", [validate_register], register);
 app.post("/login", auth);
