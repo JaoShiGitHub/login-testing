@@ -1,10 +1,34 @@
 import axios from "axios";
-import jwtDecode from "jwt-decode";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const login = async (data) => {
-  const result = await axios.post("http://localhost:4000/login", data, {
-    withCredentials: true,
-  });
-};
+const AuthContext = React.createContext();
 
-export default login;
+function AuthProvider() {
+  const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const login = async (data) => {
+    try {
+      setIsAuthenticated(false);
+      const response = await axios.post("http://localhost:4000/login", data, {
+        withCredentials: true,
+      });
+
+      setIsAuthenticated(true);
+      console.log("Login successful: ", response.data);
+      navigate("/profile");
+    } catch (error) {
+      console.log("Login failed: ", error);
+    }
+  };
+
+  return (
+    <AuthContext.Provider value={{ isAuthenticated, login }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+const useAuth = () => React.useContext(AuthContext);
+export { AuthProvider, useAuth };
