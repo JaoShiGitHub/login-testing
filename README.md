@@ -19,3 +19,6 @@
    * The backend verifies the token in the cookie before responding.
      
    * This gives you better security than storing the JWT in localStorage or sessionStorage.
+
+### Without withCredentials
+   * Your browser will not send cookies to the backend, so the backend will think you're not logged in, even if the cookie is stored in the browser.
