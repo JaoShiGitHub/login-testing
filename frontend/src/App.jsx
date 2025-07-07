@@ -1,13 +1,12 @@
-import Profile from "./pages/Profile";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
 import { useAuth } from "./contexts/authentication.js";
+import AuthenticatedApp from "./pages/AuthenticatedApp.jsx";
+import UnAuthenticatedApp from "./pages/UnAuthenticatedApp.jsx";
 
 function App() {
   const auth = useAuth();
   return (
     <div className="App">
-      {auth.isAuthenticated ? <Profile /> : <LoginPage />}
+      {auth.isAuthenticated ? <AuthenticatedApp /> : <UnAuthenticatedApp />}
     </div>
   );
 }
