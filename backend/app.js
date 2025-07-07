@@ -8,6 +8,7 @@ import authMiddleware from "./middlewares/auth.js";
 import register from "./controllers/register.js";
 import get_user from "./controllers/users.js";
 import auth from "./controllers/auth.js";
+import logout from "./controllers/logout.js";
 
 const app = express();
 const port = 4000;
@@ -19,6 +20,7 @@ app.use(cookieParser());
 app.post("/register", [validate_register], register);
 app.post("/login", auth);
 app.get("/profile", authMiddleware, get_user);
+app.post("/logout", logout);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
