@@ -3,10 +3,6 @@ import { pool } from "../utils/db.js";
 const get_user = async (req, res) => {
   const { customer_id } = req.query;
 
-  if (!token) {
-    return res.status(401).json({ message: "No token found" });
-  }
-
   try {
     const user = await pool.query("SELECT * FROM users WHERE id = $1", [
       customer_id,
@@ -14,7 +10,7 @@ const get_user = async (req, res) => {
 
     const user_data = user.rows[0];
 
-    if (user_data === undefined) {
+    if (!user_data) {
       return res.status(404).json({
         status: "error",
         message: `Not found user id: ${customer_id}`,
