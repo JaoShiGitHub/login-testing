@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/authentication";
 
 function Profile() {
   const navigator = useNavigate();
+  const { setIsAuthenticated } = useAuth();
   const items_center = "flex flex-col items-center";
   const [userData, setUserData] = useState(null);
 
@@ -25,16 +27,17 @@ function Profile() {
     }
   };
 
-  const handleLogout = () => {
-    axios
-      .get("http://localhost:4000/logout", { withCredentials: true })
-      .then((response) => {
-        console.log("Logout successful:", response.data);
-      })
-      .catch((error) => {
-        console.error("Logout failed:", error);
+  const handleLogout = async () => {
+    try {
+      setIsAuthenticated(false);
+      navigator(`/login`);
+      const response = await axios.post("http://localhost:4000/logout", {
+        withCredentials: true,
       });
-    navigator(`/login`);
+      console.log("Logout successful:", response.data);
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   return (

@@ -6,6 +6,7 @@ function UnAuthenticatedApp() {
     <div className="">
       <Routes>
         <Route path="/" element={<LoginPage />} />
+        <Route path="*" element={<LoginPage />} />
       </Routes>
     </div>
   );

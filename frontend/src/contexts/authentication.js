@@ -15,7 +15,7 @@ function AuthProvider(props) {
         withCredentials: true,
       });
 
-      setIsAuthenticated(true);
+      setIsAuthenticated(!isAuthenticated);
       console.log("Login successful: ", response.data);
       navigate("/profile");
     } catch (error) {
@@ -24,7 +24,9 @@ function AuthProvider(props) {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, setIsAuthenticated, login }}
+    >
       {props.children}
     </AuthContext.Provider>
   );

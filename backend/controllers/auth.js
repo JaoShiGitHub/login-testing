@@ -5,9 +5,9 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const auth = async (req, res) => {
-  const { email, password } = req.body;
+  const { identifier, password } = req.body;
   const data = await pool.query(`SELECT * FROM users WHERE email = $1`, [
-    email,
+    identifier,
   ]);
   const user = data.rows[0];
 
@@ -28,7 +28,7 @@ const auth = async (req, res) => {
   const token = jwt.sign(
     {
       id: user.id,
-      email: user.email,
+      email: user.identifier,
       username: user.username,
     },
     process.env.SECRET_KEY,
