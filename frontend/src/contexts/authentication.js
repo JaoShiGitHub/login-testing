@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = React.createContext();
@@ -15,14 +15,28 @@ function AuthProvider(props) {
         withCredentials: true,
       });
 
-      setIsAuthenticated(!isAuthenticated);
+      setIsAuthenticated(true);
       console.log("Login successful: ", response.data);
       navigate("/profile");
     } catch (error) {
       throw error;
-      console.log("Login failed: ", error);
     }
   };
+
+  // This check prevent refreshing from browser
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        await axios.get("http://localhost:4000/profile?customer_id=3", {
+          withCredentials: true,
+        });
+        setIsAuthenticated(true);
+      } catch {
+        setIsAuthenticated(false);
+      }
+    };
+    checkAuth();
+  }, []);
 
   return (
     <AuthContext.Provider

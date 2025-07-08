@@ -19,7 +19,6 @@ function Profile() {
         "http://localhost:4000/profile?customer_id=3",
         { withCredentials: true }
       );
-
       setUserData(data.data.user_data);
       console.log("User data fetched successfully:", data.data.user_data);
     } catch (error) {
@@ -34,6 +33,7 @@ function Profile() {
       const response = await axios.post("http://localhost:4000/logout", {
         withCredentials: true,
       });
+
       console.log("Logout successful:", response.data);
     } catch (error) {
       console.error("Logout failed:", error);
