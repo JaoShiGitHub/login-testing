@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useAuth } from "../contexts/authentication";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
+  const navigate = useNavigate();
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
 
@@ -54,6 +56,15 @@ function LoginPage() {
           Login
         </button>
       </form>
+      <p>
+        Don't have an account?{" "}
+        <button
+          className="mt-40 font-bold text-blue-500"
+          onClick={() => navigate("/register")}
+        >
+          Sign up
+        </button>
+      </p>
     </div>
   );
 }
