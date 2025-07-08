@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useState } from "react";
+import { use, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/authentication";
 
 const FormLabel = (props) => {
   const { name, value, type, placeholder, handleOnChange } = props;
@@ -26,6 +27,8 @@ function RegisterPage() {
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("");
 
+  const { setIsAuthenticated } = useAuth();
+
   const items_center = "flex flex-col items-center";
 
   const handleRegisterSubmit = async (e) => {
@@ -38,7 +41,8 @@ function RegisterPage() {
         status,
       });
       console.log("Registration successful:", response.data);
-      navigate("/login");
+      setIsAuthenticated(true);
+      navigate("/profile");
     } catch (error) {
       console.error("Error registering user:", error);
       // Handle error (e.g., show a message to the user)

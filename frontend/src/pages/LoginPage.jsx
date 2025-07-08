@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import { useAuth } from "../contexts/authentication";
 import { useNavigate } from "react-router-dom";
 
@@ -6,18 +6,24 @@ function LoginPage() {
   const navigate = useNavigate();
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const items_center = "flex flex-col items-center";
   const input_style = "border rounded-md p-2 mb-4";
 
   const { login } = useAuth();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login({
-      identifier,
-      password,
-    });
+    setErrorMessage("");
+    try {
+      await login({
+        identifier,
+        password,
+      });
+    } catch (error) {
+      setErrorMessage("Username or password is incorrect.");
+    }
   };
 
   return (
@@ -52,10 +58,14 @@ function LoginPage() {
             />
           </label>
         </div>
+        {errorMessage && (
+          <div className="text-red-500 mb-4">{errorMessage}</div>
+        )}
         <button type="submit" className="bg-blue-500 text-white p-2 rounded">
           Login
         </button>
       </form>
+
       <p>
         Don't have an account?{" "}
         <button

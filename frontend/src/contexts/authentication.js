@@ -19,6 +19,7 @@ function AuthProvider(props) {
       console.log("Login successful: ", response.data);
       navigate("/profile");
     } catch (error) {
+      throw error;
       console.log("Login failed: ", error);
     }
   };
