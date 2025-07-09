@@ -7,10 +7,11 @@ const AuthContext = React.createContext();
 function AuthProvider(props) {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
 
   const checkAuth = async () => {
     try {
-      await axios.get("http://localhost:4000/profile?customer_id=3", {
+      await axios.get(`http://localhost:4000/profile?customer_id=${user.id}`, {
         withCredentials: true,
       });
       setIsAuthenticated(true);
@@ -31,13 +32,20 @@ function AuthProvider(props) {
       const response = await axios.post("http://localhost:4000/login", data, {
         withCredentials: true,
       });
+
+      setUser(response.data);
       setIsAuthenticated(true);
-      console.log("Login successful: ", response.data);
       navigate("/profile");
     } catch (error) {
       throw error;
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      console.log("Login successful: ", user);
+    }
+  }, [user]);
 
   const logout = async () => {
     try {
@@ -49,7 +57,7 @@ function AuthProvider(props) {
         }
       );
       setIsAuthenticated(false);
-      navigator(`/login`);
+      navigate(`/login`);
       await checkAuth();
       console.log("Logout successful:", response.data);
     } catch (error) {
@@ -65,6 +73,8 @@ function AuthProvider(props) {
         login,
         logout,
         checkAuth,
+        user,
+        setUser,
       }}
     >
       {props.children}

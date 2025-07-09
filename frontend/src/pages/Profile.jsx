@@ -3,22 +3,22 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/authentication";
 
 function Profile() {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const items_center = "flex flex-col items-center";
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    get_userData();
-  }, []);
+    get_userData(user.user.id);
+  }, [user]);
 
-  const get_userData = async () => {
+  const get_userData = async (id) => {
     try {
       const data = await axios.get(
-        "http://localhost:4000/profile?customer_id=3",
+        `http://localhost:4000/profile?customer_id=${id}`,
         { withCredentials: true }
       );
-      setUserData(data.data.user_data);
-      console.log("User data fetched successfully:", data.data.user_data);
+      setUserData(data?.data?.user_data);
+      console.log("User data fetched successfully:", data?.data?.user_data);
     } catch (error) {
       console.error("Error fetching user data");
     }
