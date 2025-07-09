@@ -4,6 +4,7 @@ import UnAuthenticatedApp from "./pages/UnAuthenticatedApp.jsx";
 
 function App() {
   const auth = useAuth();
+
   return (
     <div className="App">
       {auth.isAuthenticated ? <AuthenticatedApp /> : <UnAuthenticatedApp />}
