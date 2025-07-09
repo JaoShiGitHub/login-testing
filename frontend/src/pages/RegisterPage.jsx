@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/authentication";
 
 const FormLabel = (props) => {
   const { name, value, type, placeholder, handleOnChange } = props;
@@ -26,8 +25,7 @@ function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("");
-
-  const { setIsAuthenticated } = useAuth();
+  const [registerStatus, setRegisterStatus] = useState(false);
 
   const items_center = "flex flex-col items-center";
 
@@ -41,51 +39,66 @@ function RegisterPage() {
         status,
       });
       console.log("Registration successful:", response.data);
-      setIsAuthenticated(true);
-      navigate("/profile");
+      setRegisterStatus(!registerStatus);
     } catch (error) {
       console.error("Error registering user:", error);
-      // Handle error (e.g., show a message to the user)
     }
   };
 
   return (
     <div className={`${items_center} h-screen justify-center`}>
-      <h1 className="font-bold text-4xl mb-10">Register</h1>
-      <form className={items_center} onSubmit={handleRegisterSubmit}>
-        <FormLabel
-          name="username"
-          value={username}
-          type="text"
-          placeholder="Username"
-          handleOnChange={(e) => setUsername(e.target.value)}
-        />
-        <FormLabel
-          name="email"
-          value={email}
-          type="email"
-          placeholder="Email"
-          handleOnChange={(e) => setEmail(e.target.value)}
-        />
-        <FormLabel
-          name="password"
-          value={password}
-          type="password"
-          placeholder="Password"
-          handleOnChange={(e) => setPassword(e.target.value)}
-        />
-        <FormLabel
-          name="status"
-          value={status}
-          type="text"
-          placeholder="Status"
-          handleOnChange={(e) => setStatus(e.target.value)}
-        />
+      {registerStatus ? (
+        <div>
+          <h1 className="font-md text-3xl mb-4">Registration successful</h1>
+          <p className="text-lg">
+            Go back to{"  "}
+            <button
+              className="text-blue-500 font-bold ml-1"
+              onClick={() => navigate("/login")}
+            >
+              Login
+            </button>
+          </p>
+        </div>
+      ) : (
+        <div>
+          <h1 className="font-bold text-4xl mb-10">Register</h1>
+          <form className={items_center} onSubmit={handleRegisterSubmit}>
+            <FormLabel
+              name="username"
+              value={username}
+              type="text"
+              placeholder="Username"
+              handleOnChange={(e) => setUsername(e.target.value)}
+            />
+            <FormLabel
+              name="email"
+              value={email}
+              type="email"
+              placeholder="Email"
+              handleOnChange={(e) => setEmail(e.target.value)}
+            />
+            <FormLabel
+              name="password"
+              value={password}
+              type="password"
+              placeholder="Password"
+              handleOnChange={(e) => setPassword(e.target.value)}
+            />
+            <FormLabel
+              name="status"
+              value={status}
+              type="text"
+              placeholder="Status"
+              handleOnChange={(e) => setStatus(e.target.value)}
+            />
 
-        <button className="mt-20 bg-blue-500 text-white p-2 rounded">
-          Register
-        </button>
-      </form>
+            <button className="mt-20 bg-blue-500 text-white p-2 rounded">
+              Register
+            </button>
+          </form>
+        </div>
+      )}
     </div>
   );
 }
