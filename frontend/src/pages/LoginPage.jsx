@@ -67,7 +67,9 @@ function LoginPage() {
           </label>
         </div>
         {errorMessage && (
-          <div className="text-red-500 mb-4">{errorMessage}</div>
+          <div className="text-red-500 mb-4">
+            <Trans i18nKey="loginFormIncorrect">{errorMessage}</Trans>
+          </div>
         )}
         <button type="submit" className="bg-blue-500 text-white p-2 rounded">
           <Trans i18nKey="login">Log in</Trans>
