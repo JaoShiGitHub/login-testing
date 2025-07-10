@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import LangButtons from "./LangButtons";
 
 const FormLabel = (props) => {
   const { name, value, type, placeholder, handleOnChange } = props;
@@ -26,6 +28,8 @@ function RegisterPage() {
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("");
   const [registerStatus, setRegisterStatus] = useState(false);
+
+  const { t } = useTranslation();
 
   const items_center = "flex flex-col items-center";
 
@@ -61,42 +65,53 @@ function RegisterPage() {
           </p>
         </div>
       ) : (
-        <div>
-          <h1 className="font-bold text-4xl mb-10">Register</h1>
+        <div className={`${items_center}`}>
+          <h1 className="font-bold text-4xl mb-10">{t("register")}</h1>
           <form className={items_center} onSubmit={handleRegisterSubmit}>
             <FormLabel
               name="username"
               value={username}
               type="text"
-              placeholder="Username"
+              placeholder={t("username")}
               handleOnChange={(e) => setUsername(e.target.value)}
             />
             <FormLabel
               name="email"
               value={email}
               type="email"
-              placeholder="Email"
+              placeholder={t("email")}
               handleOnChange={(e) => setEmail(e.target.value)}
             />
             <FormLabel
               name="password"
               value={password}
               type="password"
-              placeholder="Password"
+              placeholder={t("password")}
               handleOnChange={(e) => setPassword(e.target.value)}
             />
             <FormLabel
               name="status"
               value={status}
               type="text"
-              placeholder="Status"
+              placeholder={t("status")}
               handleOnChange={(e) => setStatus(e.target.value)}
             />
 
-            <button className="mt-20 bg-blue-500 text-white p-2 rounded">
-              Register
+            <button className="mt-6 mb-20 bg-blue-500 text-white p-2 rounded">
+              {t("register")}
             </button>
           </form>
+
+          <p>
+            {t("haveAccount")}{" "}
+            <button
+              className="mb-4 font-bold text-blue-500"
+              onClick={() => navigate("/login")}
+            >
+              {t("login")}
+            </button>
+          </p>
+          <LangButtons />
         </div>
       )}
     </div>

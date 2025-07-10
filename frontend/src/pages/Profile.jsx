@@ -2,17 +2,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/authentication";
 import { useTranslation, Trans } from "react-i18next";
-
-const langs = {
-  en: { nativeName: "English" },
-  esp: { nativeName: "Spanish" },
-};
+import LangButtons from "./LangButtons";
 
 function Profile() {
   const { logout, user } = useAuth();
   const items_center = "flex flex-col items-center";
   const [userData, setUserData] = useState(null);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     get_userData(user.user.id);
@@ -38,19 +34,8 @@ function Profile() {
   return (
     <div className={`${items_center} h-screen`}>
       {/* Text Greeting */}
-      <div className="flex gap-x-4">
-        {Object.keys(langs).map((lang) => {
-          return (
-            <button
-              type="submit"
-              key={lang}
-              onClick={() => i18n.changeLanguage(lang)}
-              disabled={i18n.resolvedLanguage === lang}
-            >
-              {langs[lang].nativeName}
-            </button>
-          );
-        })}
+      <div className="mt-10">
+        <LangButtons />
       </div>
       <h1 className="font-bold text-4xl mb-10 mt-20">
         {t("welcome")} {userData?.username} {":)"}
@@ -58,20 +43,21 @@ function Profile() {
       <div className="w-[200px] h-[200px] bg-pink-200"></div>
       <section className={`${items_center} gap-y-2 mt-8 mb-20`}>
         <p>
-          <b>Username</b>: {userData?.username}
+          <b>{t("username")}</b>: {userData?.username}
         </p>
         <p>
-          <b>Email</b>: {userData?.email}
+          <b>{t("email")}</b>: {userData?.email}
         </p>
         <p>
-          <b>Status</b>: {userData?.status}
+          <b>{t("status")}</b>: {userData?.status}
         </p>
       </section>
+      <p></p>
       <button
         className="hover:font-bold hover:text-white hover:bg-gray-950 px-2 border-2 rounded-md"
         onClick={handleLogout}
       >
-        logout
+        {t("logout")}
       </button>
     </div>
   );
