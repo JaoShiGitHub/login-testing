@@ -22,3 +22,10 @@
 
 ### Without withCredentials
    * Your browser will not send cookies to the backend, so the backend will think you're not logged in, even if the cookie is stored in the browser.
+
+## FAQ
+
+  ### input losing focus
+   * Want to make a small component for similar input tags in a file, but it doesn’t work, and whenever you type on each input, the input out of focus.
+   * That's because you defined the component inside another component (which contains your form), and it gets re-created on every render, causing side effects like the input losing focus.
+   * To solve the issue: Move your custom components outside the main component. (Example: `src/pages/RegisterPage.jsx`)
