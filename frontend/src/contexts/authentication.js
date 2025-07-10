@@ -21,7 +21,6 @@ function AuthProvider(props) {
   };
 
   // This check prevent refreshing from browser
-
   useEffect(() => {
     checkAuth();
   }, []);

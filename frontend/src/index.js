@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthProvider } from "./contexts/authentication";
 import { BrowserRouter } from "react-router-dom";
+import "./i18next.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
