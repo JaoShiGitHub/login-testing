@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 import LangButtons from "./LangButtons";
 
 const FormLabel = (props) => {
@@ -49,6 +49,10 @@ function RegisterPage() {
     }
   };
 
+  const capitalizeFirstLetter = (str) => {
+    return t(str).charAt(0).toUpperCase() + t(str).slice(1);
+  };
+
   return (
     <div className={`${items_center} h-screen justify-center`}>
       {registerStatus ? (
@@ -66,49 +70,51 @@ function RegisterPage() {
         </div>
       ) : (
         <div className={`${items_center}`}>
-          <h1 className="font-bold text-4xl mb-10">{t("register")}</h1>
+          <h1 className="font-bold text-4xl mb-10">
+            <Trans i18nKey="register">Register</Trans>
+          </h1>
           <form className={items_center} onSubmit={handleRegisterSubmit}>
             <FormLabel
               name="username"
               value={username}
               type="text"
-              placeholder={t("username")}
+              placeholder={capitalizeFirstLetter("username")}
               handleOnChange={(e) => setUsername(e.target.value)}
             />
             <FormLabel
               name="email"
               value={email}
               type="email"
-              placeholder={t("email")}
+              placeholder={capitalizeFirstLetter("email")}
               handleOnChange={(e) => setEmail(e.target.value)}
             />
             <FormLabel
               name="password"
               value={password}
               type="password"
-              placeholder={t("password")}
+              placeholder={capitalizeFirstLetter("password")}
               handleOnChange={(e) => setPassword(e.target.value)}
             />
             <FormLabel
               name="status"
               value={status}
               type="text"
-              placeholder={t("status")}
+              placeholder={capitalizeFirstLetter("status")}
               handleOnChange={(e) => setStatus(e.target.value)}
             />
 
             <button className="mt-6 mb-20 bg-blue-500 text-white p-2 rounded">
-              {t("register")}
+              <Trans i18nKey="register">Register</Trans>
             </button>
           </form>
 
           <p>
-            {t("haveAccount")}{" "}
+            <Trans i18nKey="haveAccount">Already have an account?</Trans>{" "}
             <button
               className="mb-4 font-bold text-blue-500"
               onClick={() => navigate("/login")}
             >
-              {t("login")}
+              <Trans i18nKey="login">Login</Trans>
             </button>
           </p>
           <LangButtons />

@@ -15,7 +15,7 @@ i18next.use(initReactI18next).init({
         password: "Password",
         login: "Login",
         logout: "Log out",
-        register: "Sing up",
+        register: "Register",
         usernameOrEmail: "Username or email",
         haveNoAccount: "Don't have an account?",
         haveAccount: "Already have an account?",
