@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../contexts/authentication";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 import LangButtons from "./LangButtons";
 
 function LoginPage() {
@@ -41,7 +41,9 @@ function LoginPage() {
               id="username"
               className={input_style}
               name="username"
-              placeholder={t("username")}
+              placeholder={
+                t("username").charAt(0).toUpperCase() + t("username").slice(1)
+              }
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
               required
@@ -55,7 +57,9 @@ function LoginPage() {
               id="password"
               className={input_style}
               name="password"
-              placeholder={t("password")}
+              placeholder={
+                t("password").charAt(0).toUpperCase() + t("password").slice(1)
+              }
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -66,17 +70,17 @@ function LoginPage() {
           <div className="text-red-500 mb-4">{errorMessage}</div>
         )}
         <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-          {t("login")}
+          <Trans i18nKey="login">Log in</Trans>
         </button>
       </form>
 
       <p>
-        {t("haveNoAccount")}{" "}
+        <Trans i18nKey="haveNoAccount">Don't have an account?</Trans>{" "}
         <button
           className="mt-40 mb-4 font-bold text-blue-500"
           onClick={() => navigate("/register")}
         >
-          {t("register")}
+          <Trans i18nKey="register">Register</Trans>
         </button>
       </p>
       <LangButtons />

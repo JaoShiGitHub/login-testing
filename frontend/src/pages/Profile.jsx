@@ -38,18 +38,27 @@ function Profile() {
         <LangButtons />
       </div>
       <h1 className="font-bold text-4xl mb-10 mt-20">
-        {t("welcome")} {userData?.username} {":)"}
+        <Trans i18nKey="welcome">Welcome</Trans> {userData?.username} {":)"}
       </h1>
       <div className="w-[200px] h-[200px] bg-pink-200"></div>
       <section className={`${items_center} gap-y-2 mt-8 mb-20`}>
         <p>
-          <b>{t("username")}</b>: {userData?.username}
+          <b>
+            <Trans i18nKey="username">Username</Trans>
+          </b>
+          : {userData?.username}
         </p>
         <p>
-          <b>{t("email")}</b>: {userData?.email}
+          <b>
+            <Trans i18nKey="email">Email</Trans>
+          </b>
+          : {userData?.email}
         </p>
         <p>
-          <b>{t("status")}</b>: {userData?.status}
+          <b>
+            <Trans i18nKey="status">Status</Trans>
+          </b>
+          : {userData?.status}
         </p>
       </section>
       <p></p>
@@ -57,7 +66,7 @@ function Profile() {
         className="hover:font-bold hover:text-white hover:bg-gray-950 px-2 border-2 rounded-md"
         onClick={handleLogout}
       >
-        {t("logout")}
+        <Trans i18nKey="logout">Log out</Trans>
       </button>
     </div>
   );
