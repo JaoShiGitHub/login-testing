@@ -1,5 +1,7 @@
+import { pool } from "../utils/db.js";
+
 // Validation for register endpoint
-function validate_register(req, res, next) {
+async function validate_register(req, res, next) {
   const requiredFields = {
     username: req.body.username,
     email: req.body.email,
@@ -19,6 +21,17 @@ function validate_register(req, res, next) {
       });
     }
   }
+
+  if (requiredFields.username) {
+    const data = await pool.query(`SELECT * FROM users WHERE username = $1`, [
+      requiredFields.username,
+    ]);
+
+    if (data.rows[0].username) {
+      return res.status(400).json({ message: "The username has been taken." });
+    }
+  }
+
   next();
 }
 
