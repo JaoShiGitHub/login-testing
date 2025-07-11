@@ -29,3 +29,7 @@
    * Want to make a small component for similar input tags in a file, but it doesn’t work, and whenever you type on each input, the input out of focus.
    * That's because you defined the component inside another component (which contains your form), and it gets re-created on every render, causing side effects like the input losing focus.
    * To solve the issue: Move your custom components outside the main component. (Example: `src/pages/RegisterPage.jsx`)
+
+## LEARN MORE
+  ### Articles
+  * Deployment: [`Deploy a Postgres, Express, React and Nodejs Fullstack App on Heroku and Netlify`](https://levelup.gitconnected.com/deploy-pern-fullstack-app-on-heroku-and-netlify-automatic-deploy-9b61ac6a254e)
