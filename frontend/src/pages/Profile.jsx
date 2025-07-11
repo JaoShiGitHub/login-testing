@@ -8,6 +8,7 @@ function Profile() {
   const { logout, user } = useAuth();
   const items_center = "flex flex-col items-center";
   const [userData, setUserData] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -22,6 +23,14 @@ function Profile() {
       );
       setUserData(data?.data?.user_data);
       console.log("User data fetched successfully:", data?.data?.user_data);
+
+      const binary = data?.data?.user_data?.photo?.data;
+      const base64String = btoa(
+        binary.reduce((data, byte) => data + String.fromCharCode(byte), "")
+      );
+
+      const imageSrc = `data:image/jpeg;base64,${base64String}`;
+      setImageUrl(imageSrc);
     } catch (error) {
       console.error("Error fetching user data");
     }
@@ -40,7 +49,12 @@ function Profile() {
       <h1 className="font-bold text-4xl mb-10 mt-20">
         <Trans i18nKey="welcome">Welcome</Trans> {userData?.username} {":)"}
       </h1>
-      <div className="w-[200px] h-[200px] bg-pink-200"></div>
+      {/* <div className="w-[200px] h-[200px] bg-pink-200"></div> */}
+      <img
+        src={imageUrl}
+        alt={userData?.username}
+        className="w-[200px] h-[200px]"
+      />
       <section className={`${items_center} gap-y-2 mt-8 mb-20`}>
         <p>
           <b>

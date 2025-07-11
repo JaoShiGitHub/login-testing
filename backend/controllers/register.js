@@ -1,5 +1,6 @@
 import { pool } from "../utils/db.js";
 import { readFile } from "fs/promises";
+import path from "path";
 import bcrypt from "bcrypt";
 
 const register = async (req, res) => {
@@ -9,7 +10,9 @@ const register = async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const password = await bcrypt.hash(user.password, salt);
 
-  const imageBuffer = await readFile("../lili2.jpg");
+  const imagePath = path.join(process.cwd(), "lili2.jpg");
+  console.log("Looking for image at:", imagePath);
+  const imageBuffer = await readFile(imagePath);
 
   try {
     await pool.query(
