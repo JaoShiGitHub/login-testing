@@ -4,12 +4,22 @@ import { useAuth } from "../contexts/authentication";
 import { useTranslation, Trans } from "react-i18next";
 import LangButtons from "./LangButtons";
 
+const items_center = "flex flex-col items-center";
+
 function Profile() {
   const { logout, user } = useAuth();
-  const items_center = "flex flex-col items-center";
+  const { t } = useTranslation();
+
+  const [editFormSwitch, setEditFormSwitch] = useState(false);
+  const [userId, setUserId] = useState(null);
   const [userData, setUserData] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
-  const { t } = useTranslation();
+  const [newUserInfo, setNewUserInfo] = useState({
+    username: "",
+    email: "",
+    password: "",
+    status: "",
+  });
 
   useEffect(() => {
     get_userData(user.user.id);
@@ -21,7 +31,9 @@ function Profile() {
         `http://localhost:4000/profile?customer_id=${id}`,
         { withCredentials: true }
       );
+
       setUserData(data?.data?.user_data);
+      setUserId(id);
       console.log("User data fetched successfully:", data?.data?.user_data);
 
       const binary = data?.data?.user_data?.photo?.data;
@@ -33,6 +45,23 @@ function Profile() {
       setImageUrl(imageSrc);
     } catch (error) {
       console.error("Error fetching user data");
+    }
+  };
+
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.put(
+        `http://localhost:4000/edit?id=${userId}`,
+        newUserInfo,
+        { withCredentials: true }
+      );
+
+      console.log("Update successfully ", response);
+      setEditFormSwitch(false);
+    } catch (error) {
+      console.error(error);
     }
   };
 
