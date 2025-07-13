@@ -101,7 +101,7 @@ function Profile() {
             className="w-[200px] h-[200px]"
           />
           <label className="bg-blue-500 hover:bg-blue-900 mb-5 text-white px-4 py-1 rounded cursor-pointer inline-block">
-            Change Image
+            <Trans i18nKey="changeImage">Change Image</Trans>
             <input
               type="file"
               name="photo"
@@ -171,25 +171,31 @@ function Profile() {
           </section>
         </div>
       )}
-      <section className="flex gap-x-8">
-        <button className={css_button} onClick={handleLogout}>
-          <Trans i18nKey="logout">Log out</Trans>
-        </button>
+      <section className="flex flex-col gap-y-16 gap-x-8">
         {editFormSwitch ? (
-          <button
-            className={css_button}
-            onClick={() => setEditFormSwitch(false)}
-          >
-            Cancel
-          </button>
+          <div className="flex gap-4">
+            <button
+              className={css_button}
+              onClick={() => setEditFormSwitch(false)}
+            >
+              <Trans i18nKey="cancel">Cancel</Trans>
+            </button>
+
+            <button className={css_button}>
+              <Trans i18nKey="save">Save</Trans>
+            </button>
+          </div>
         ) : (
           <button
             className={css_button}
             onClick={() => setEditFormSwitch(true)}
           >
-            Edit
+            <Trans i18nKey="edit">Edit</Trans>
           </button>
         )}
+        <button className={css_button} onClick={handleLogout}>
+          <Trans i18nKey="logout">Log out</Trans>
+        </button>
       </section>
     </div>
   );
