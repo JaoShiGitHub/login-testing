@@ -72,6 +72,10 @@ function Profile() {
     setImage(e.target.files[0]);
   };
 
+  const capitalizeFirstLetter = (str) => {
+    return t(str).charAt(0).toUpperCase() + t(str).slice(1);
+  };
+
   const handleLogout = async () => {
     await logout();
   };
@@ -87,13 +91,56 @@ function Profile() {
       </h1>
       {/* Edit Profile */}
       {editFormSwitch ? (
-        <form className={items_center} onSubmit={handleOnSubmit}>
-          <input
-            type="file"
-            name="photo"
-            accept="image/*"
-            onChange={handleImageChange}
+        <form
+          className={`${items_center} gap-5 mb-10`}
+          onSubmit={handleOnSubmit}
+        >
+          <img
+            src={imageUrl}
+            alt={userData?.username}
+            className="w-[200px] h-[200px]"
           />
+          <label className="bg-blue-500 hover:bg-blue-900 mb-5 text-white px-4 py-1 rounded cursor-pointer inline-block">
+            Change Image
+            <input
+              type="file"
+              name="photo"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="hidden"
+            />
+          </label>
+          <label>
+            <b>
+              <Trans i18nKey="username">Username</Trans>:
+            </b>
+            <input
+              className="mx-4 px-2 py-1 rounded border"
+              type="text"
+              placeholder={capitalizeFirstLetter("username")}
+            />
+          </label>
+          <label>
+            <b>
+              <Trans i18nKey="email">Email</Trans>:
+            </b>
+            <input
+              className="mx-4 px-2 py-1 rounded border"
+              type="text"
+              placeholder={capitalizeFirstLetter("email")}
+            />
+          </label>
+
+          <label>
+            <b>
+              <Trans i18nKey="status">Status</Trans>:
+            </b>
+            <input
+              className="mx-4 px-2 py-1 rounded border"
+              type="text"
+              placeholder={capitalizeFirstLetter("status")}
+            />
+          </label>
         </form>
       ) : (
         <div className={items_center}>
