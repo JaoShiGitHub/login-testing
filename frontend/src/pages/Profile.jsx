@@ -73,6 +73,13 @@ function Profile() {
     }
   };
 
+  const handleOnClickCancel = () => {
+    setUsername(userData?.username);
+    setEmail(userData?.email);
+    setStatus(userData?.status);
+    setEditFormSwitch(false);
+  };
+
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
   };
@@ -185,10 +192,7 @@ function Profile() {
       <section className="flex flex-col gap-y-16 gap-x-8">
         {editFormSwitch ? (
           <div className="flex gap-4">
-            <button
-              className={css_button}
-              onClick={() => setEditFormSwitch(false)}
-            >
+            <button className={css_button} onClick={handleOnClickCancel}>
               <Trans i18nKey="cancel">Cancel</Trans>
             </button>
 
