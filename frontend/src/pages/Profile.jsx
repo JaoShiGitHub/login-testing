@@ -17,12 +17,10 @@ function Profile() {
   const [userData, setUserData] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [image, setImage] = useState(null);
-  const [newUserInfo, setNewUserInfo] = useState({
-    username: "",
-    email: "",
-    password: "",
-    status: "",
-  });
+  // input states
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState("");
 
   useEffect(() => {
     get_userData(user.user.id);
@@ -30,22 +28,29 @@ function Profile() {
 
   const get_userData = async (id) => {
     try {
-      const data = await axios.get(
+      const response = await axios.get(
         `http://localhost:4000/profile?customer_id=${id}`,
         { withCredentials: true }
       );
 
-      setUserData(data?.data?.user_data);
+      const user = response?.data?.user_data;
+
+      setUserData(user);
       setUserId(id);
-      console.log("User data fetched successfully:", data?.data?.user_data);
+      console.log("User data fetched successfully:", user);
+      // data?.data?.user_data?.photo?.data;
+      if (user?.photo?.data) {
+        const binary = user.photo.data;
+        const base64String = btoa(
+          binary.reduce((data, byte) => data + String.fromCharCode(byte), "")
+        );
+        const imageSrc = `data:image/jpeg;base64,${base64String}`;
+        setImageUrl(imageSrc);
+      }
 
-      const binary = data?.data?.user_data?.photo?.data;
-      const base64String = btoa(
-        binary.reduce((data, byte) => data + String.fromCharCode(byte), "")
-      );
-
-      const imageSrc = `data:image/jpeg;base64,${base64String}`;
-      setImageUrl(imageSrc);
+      setUsername(user?.username);
+      setEmail(user?.email);
+      setStatus(user?.status);
     } catch (error) {
       console.error("Error fetching user data");
     }
@@ -57,7 +62,7 @@ function Profile() {
     try {
       const response = await axios.put(
         `http://localhost:4000/edit?id=${userId}`,
-        newUserInfo,
+        { username: "", email: "", password: "", status: "" },
         { withCredentials: true }
       );
 
@@ -118,6 +123,8 @@ function Profile() {
               className="mx-4 px-2 py-1 rounded border"
               type="text"
               placeholder={capitalizeFirstLetter("username")}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </label>
           <label>
@@ -128,6 +135,8 @@ function Profile() {
               className="mx-4 px-2 py-1 rounded border"
               type="text"
               placeholder={capitalizeFirstLetter("email")}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </label>
 
@@ -139,6 +148,8 @@ function Profile() {
               className="mx-4 px-2 py-1 rounded border"
               type="text"
               placeholder={capitalizeFirstLetter("status")}
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
             />
           </label>
         </form>
