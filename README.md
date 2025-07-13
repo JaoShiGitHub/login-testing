@@ -23,6 +23,13 @@
 ### Without withCredentials
    * Your browser will not send cookies to the backend, so the backend will think you're not logged in, even if the cookie is stored in the browser.
 
+## Errors
+   ### Payload Too Large (413)
+   * **`Profile.jsx:65  PUT http://localhost:4000/edit?id=18 net::ERR_FAILED 413 (Payload Too Large)`**:
+     Means your backend rejects the request because the size of the request body is bigger than the server allows. This usually happens if you upload files or large JSON bodies, and the server has limits.
+     To fix this: Increase backend payload size limit.
+     For example:
+     `app.use(express.json({ limit: '10mb' }));`
 ## FAQ
 
   ### input losing focus
