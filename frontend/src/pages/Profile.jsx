@@ -39,8 +39,7 @@ function Profile() {
 
       setUserData(user);
       setUserId(id);
-      console.log("User data fetched successfully:", user);
-      // data?.data?.user_data?.photo?.data;
+
       if (user?.photo?.data) {
         const binary = user.photo.data;
         const base64String = btoa(
@@ -53,6 +52,8 @@ function Profile() {
       setUsername(user?.username);
       setEmail(user?.email);
       setStatus(user?.status);
+
+      console.log("User data fetched successfully:", user);
     } catch (error) {
       console.error("Error fetching user data");
     }
@@ -61,14 +62,19 @@ function Profile() {
   const handleOnSubmitFormEdit = async (e) => {
     e.preventDefault();
 
+    const image = newImage || imageUrl;
+
     try {
       const response = await axios.put(
         `http://localhost:4000/edit?id=${userId}`,
-        { username: username, email: email, status: status, image: newImage },
+        { username: username, email: email, status: status, image: image },
         { withCredentials: true }
       );
 
       console.log("Update successfully ", response);
+      console.log("newImage", newImage);
+      console.log("img url: ", imageUrl);
+
       setEditFormSwitch(false);
     } catch (error) {
       console.error(error);
