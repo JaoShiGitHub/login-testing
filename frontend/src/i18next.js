@@ -1,6 +1,6 @@
 import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
+// import LanguageDetector from "i18next-browser-languagedetector";
 
 i18next.use(initReactI18next).init({
   debug: true,
@@ -20,6 +20,16 @@ i18next.use(initReactI18next).init({
         haveNoAccount: "Don't have an account?",
         haveAccount: "Already have an account?",
         loginFormIncorrect: "Username or password is incorrect.",
+        changeImage: "Change Image",
+        cancel: "Cancel",
+        save: "Save",
+        yes: "Yes",
+        no: "No",
+        eliminate: "Eliminate",
+        eliminateAccount: "Eliminate this account.",
+        registrationSuccessful: "Registration successful",
+        deleteAccount: "Do you really want to eliminate this account? 🥺",
+        accountHasEliminated: "The account has been eliminated",
       },
     },
     esp: {
@@ -37,6 +47,16 @@ i18next.use(initReactI18next).init({
         haveAccount: "¿Tienes una cuenta?",
         loginFormIncorrect:
           "El nombre de usuario o la contraseña no son correctos.",
+        changeImage: "Cambiar imagen",
+        cancel: "Cancelar",
+        save: "Guardar",
+        yes: "Sí",
+        no: "No",
+        eliminate: "Eliminar",
+        eliminateAccount: "Eliminar esta cuenta",
+        registrationSuccessful: "Registro completado",
+        deleteAccount: "¿Estás seguro de que quieres eliminar esta cuenta? 🥺",
+        accountHasEliminated: "La cuenta ha sido eliminada",
       },
     },
   },
