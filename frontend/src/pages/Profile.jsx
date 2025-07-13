@@ -193,7 +193,10 @@ function Profile() {
             <Trans i18nKey="edit">Edit</Trans>
           </button>
         )}
-        <button className={css_button} onClick={handleLogout}>
+        <button
+          className={`${css_button} self-center w-fit`}
+          onClick={handleLogout}
+        >
           <Trans i18nKey="logout">Log out</Trans>
         </button>
       </section>
