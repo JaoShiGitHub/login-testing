@@ -6,16 +6,19 @@ import LangButtons from "./LangButtons";
 
 const items_center = "flex flex-col items-center";
 const css_button =
-  "hover:font-bold hover:text-white hover:bg-gray-950 px-2 border-2 rounded-md";
+  "hover:font-bold hover:text-white hover:bg-gray-950 px-2 border-2 rounded-md w-fit";
 
 function Profile() {
   const { logout, user } = useAuth();
   const { t } = useTranslation();
 
-  const [editFormSwitch, setEditFormSwitch] = useState(false);
   const [userId, setUserId] = useState(null);
   const [userData, setUserData] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
+
+  // Buttons states
+  const [editFormSwitch, setEditFormSwitch] = useState(false);
+  const [deleteAccount, setDeleteAccount] = useState(false);
 
   // input states
   const [username, setUsername] = useState("");
@@ -109,6 +112,17 @@ function Profile() {
     setPreviewImage(null);
 
     setEditFormSwitch(false);
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      await axios.delete(`http://localhost:4000/delete?id=${userId}`, {
+        withCredentials: true,
+      });
+      console.log("Account has been deleted");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleLogout = async () => {
@@ -226,18 +240,46 @@ function Profile() {
           </div>
         ) : (
           <button
-            className={css_button}
+            className={`${css_button} self-center`}
             onClick={() => setEditFormSwitch(true)}
           >
             <Trans i18nKey="edit">Edit</Trans>
           </button>
         )}
-        <button
-          className={`${css_button} self-center w-fit`}
-          onClick={handleLogout}
-        >
-          <Trans i18nKey="logout">Log out</Trans>
-        </button>
+
+        {deleteAccount ? (
+          <section>
+            <Trans i18nKey="deleteAccount">
+              Do you really want to eliminate this account? 🥺
+            </Trans>
+            <div className="mt-5 flex gap-x-10 justify-center">
+              <button className={css_button} onClick={handleDeleteAccount}>
+                <Trans i18nKey="yes">Yes</Trans>
+              </button>
+              <button
+                className={css_button}
+                onClick={() => setDeleteAccount(false)}
+              >
+                <Trans i18nKey="no">No</Trans>
+              </button>
+            </div>
+          </section>
+        ) : (
+          <section>
+            <button
+              className={`${css_button} mr-5 w-fit`}
+              onClick={handleLogout}
+            >
+              <Trans i18nKey="logout">Log out</Trans>
+            </button>
+            <button
+              className={css_button}
+              onClick={() => setDeleteAccount(true)}
+            >
+              <Trans i18nKey="eliminateAccount">Eliminate this account</Trans>
+            </button>
+          </section>
+        )}
       </section>
     </div>
   );

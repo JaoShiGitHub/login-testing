@@ -27,7 +27,7 @@ i18next.use(initReactI18next).init({
         no: "No",
         edit: "Edit",
         eliminate: "Eliminate",
-        eliminateAccount: "Eliminate this account.",
+        eliminateAccount: "Eliminate this account",
         registrationSuccessful: "Registration successful",
         deleteAccount: "Do you really want to eliminate this account? 🥺",
         accountHasEliminated: "The account has been eliminated",
