@@ -16,12 +16,13 @@ function Profile() {
   const [userId, setUserId] = useState(null);
   const [userData, setUserData] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
-  const [previewImage, setPreviewImage] = useState(null);
 
   // input states
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("");
+  const [previewImage, setPreviewImage] = useState(null);
+  const [newImage, setNewImage] = useState(null);
 
   useEffect(() => {
     get_userData(user.user.id);
@@ -57,13 +58,13 @@ function Profile() {
     }
   };
 
-  const handleOnSubmit = async (e) => {
+  const handleOnSubmitFormEdit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await axios.put(
         `http://localhost:4000/edit?id=${userId}`,
-        { username: "", email: "", password: "", status: "" },
+        { username: username, email: email, status: status, image: newImage },
         { withCredentials: true }
       );
 
@@ -74,30 +75,34 @@ function Profile() {
     }
   };
 
-  const handleOnClickCancel = () => {
-    setUsername(userData?.username);
-    setEmail(userData?.email);
-    setStatus(userData?.status);
-    setPreviewImage(null);
-
-    setEditFormSwitch(false);
-  };
-
-  // const handleImageChange = (e) => {
-  //   setImage(e.target.files[0]);
-  // };
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const imageURL = URL.createObjectURL(file);
       setPreviewImage(imageURL);
-      // Optional: also store the file in state if you're going to send it to server
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setNewImage(reader.result); // base64 string (works only after loading)
+      };
+      reader.readAsDataURL(file); // converts file to base64 (starts the loading)
+      // console.log("file: ", file);
+      // console.log("imageURL: ", imageURL);
     }
   };
 
   const capitalizeFirstLetter = (str) => {
     return t(str).charAt(0).toUpperCase() + t(str).slice(1);
+  };
+
+  const handleOnClickCancel = () => {
+    setUsername(userData?.username);
+    setEmail(userData?.email);
+    setStatus(userData?.status);
+    setNewImage(null);
+    setPreviewImage(null);
+
+    setEditFormSwitch(false);
   };
 
   const handleLogout = async () => {
@@ -116,8 +121,9 @@ function Profile() {
       {/* Edit Profile Condition: "editFormSwitch = true ? open form : show profile" */}
       {editFormSwitch ? (
         <form
+          id="form-edit"
           className={`${items_center} gap-5 mb-10`}
-          onSubmit={handleOnSubmit}
+          onSubmit={handleOnSubmitFormEdit}
         >
           <img
             src={previewImage || imageUrl}
@@ -208,7 +214,7 @@ function Profile() {
               <Trans i18nKey="cancel">Cancel</Trans>
             </button>
 
-            <button className={css_button}>
+            <button className={css_button} type="submit" form="form-edit">
               <Trans i18nKey="save">Save</Trans>
             </button>
           </div>

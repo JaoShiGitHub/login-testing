@@ -1,18 +1,19 @@
 import { pool } from "../utils/db.js";
 
 const edit_profile = async (req, res) => {
-  const { username, email, status } = req.body;
+  const { username, email, status, image } = req.body;
   const { id } = req.query;
+  const imageBuffer = Buffer.from(image.split(",")[1], "base64");
 
   try {
     await pool.query(
-      `UPDATE users SET username = $1, email = $2, status = $3 WHERE id = $4`,
-      [username, email, status, id]
+      `UPDATE users SET username = $1, email = $2, status = $3, photo = $4 WHERE id = $5`,
+      [username, email, status, imageBuffer, id]
     );
 
-    return req.status(200).jason({ message: "Profile has been updated." });
+    return res.status(200).json({ message: "Profile has been updated." });
   } catch (error) {
-    return res.jason({ error: error });
+    return res.json({ error: error.message });
   }
 };
 
