@@ -16,7 +16,8 @@ function Profile() {
   const [userId, setUserId] = useState(null);
   const [userData, setUserData] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
-  const [image, setImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
+
   // input states
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -77,11 +78,22 @@ function Profile() {
     setUsername(userData?.username);
     setEmail(userData?.email);
     setStatus(userData?.status);
+    setPreviewImage(null);
+
     setEditFormSwitch(false);
   };
 
+  // const handleImageChange = (e) => {
+  //   setImage(e.target.files[0]);
+  // };
+
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file) {
+      const imageURL = URL.createObjectURL(file);
+      setPreviewImage(imageURL);
+      // Optional: also store the file in state if you're going to send it to server
+    }
   };
 
   const capitalizeFirstLetter = (str) => {
@@ -101,14 +113,14 @@ function Profile() {
       <h1 className="font-bold text-4xl mb-10 mt-20">
         <Trans i18nKey="welcome">Welcome</Trans> {userData?.username} {":)"}
       </h1>
-      {/* Edit Profile */}
+      {/* Edit Profile Condition: "editFormSwitch = true ? open form : show profile" */}
       {editFormSwitch ? (
         <form
           className={`${items_center} gap-5 mb-10`}
           onSubmit={handleOnSubmit}
         >
           <img
-            src={imageUrl}
+            src={previewImage || imageUrl}
             alt={userData?.username}
             className="w-[200px] h-[200px]"
           />
