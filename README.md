@@ -7,6 +7,7 @@ A project for testing full-stack development.
   * CRUD (Create, Read, Update, Delete)
   * Authentication & protected routes
   * Image Handling (Base64)
+  * Language translation using i18next
 
 ## Note
 
