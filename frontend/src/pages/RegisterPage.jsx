@@ -28,6 +28,7 @@ function RegisterPage() {
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("");
   const [registerStatus, setRegisterStatus] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const { t } = useTranslation();
 
@@ -45,7 +46,8 @@ function RegisterPage() {
       console.log("Registration successful:", response.data);
       setRegisterStatus(!registerStatus);
     } catch (error) {
-      console.error("Error registering user:", error);
+      // console.error("Registration Error: ", error?.response?.data?.message);
+      setErrorMessage(error?.response?.data?.message);
     }
   };
 
@@ -102,6 +104,11 @@ function RegisterPage() {
               placeholder={capitalizeFirstLetter("status")}
               handleOnChange={(e) => setStatus(e.target.value)}
             />
+            {errorMessage ? (
+              <strong className="text-red-700 tracking-wider">
+                {errorMessage}
+              </strong>
+            ) : null}
 
             <button className="mt-6 mb-20 bg-blue-500 text-white p-2 rounded">
               <Trans i18nKey="register">Register</Trans>

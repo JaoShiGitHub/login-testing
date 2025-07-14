@@ -28,7 +28,7 @@ async function validate_register(req, res, next) {
     ]);
 
     if (data.rows[0]) {
-      return res.status(400).json({ data: "The username has been taken." });
+      return res.status(400).json({ message: "The username has been taken!" });
     }
   }
 
