@@ -1,6 +1,6 @@
 # Login Testing
 A project for testing full-stack development.
-###🧠 What I've practiced
+### What I've practiced
   * State management
   * API handling with Axios
   * Express routing
