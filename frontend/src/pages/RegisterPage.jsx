@@ -29,6 +29,8 @@ function RegisterPage() {
   const [status, setStatus] = useState("");
   const [registerStatus, setRegisterStatus] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [previewImage, setPreviewImage] = useState(null);
+  const [image, setImage] = useState(null);
 
   const { t } = useTranslation();
 
@@ -42,6 +44,7 @@ function RegisterPage() {
         email,
         password,
         status,
+        image,
       });
       console.log("Registration successful:", response.data);
       setRegisterStatus(!registerStatus);
@@ -53,6 +56,21 @@ function RegisterPage() {
 
   const capitalizeFirstLetter = (str) => {
     return t(str).charAt(0).toUpperCase() + t(str).slice(1);
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageURL = URL.createObjectURL(file);
+      setPreviewImage(imageURL);
+      console.log(imageURL);
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -76,6 +94,22 @@ function RegisterPage() {
             <Trans i18nKey="register">Register</Trans>
           </h1>
           <form className={items_center} onSubmit={handleRegisterSubmit}>
+            <img
+              src={previewImage || ""}
+              alt={username}
+              className="w-[200px] h-[200px]"
+            />
+            <label className="bg-blue-500 hover:bg-blue-900 mb-6 mt-3 text-white px-4 py-1 rounded cursor-pointer inline-block">
+              <Trans i18nKey="changeImage">Change Image</Trans>
+              <input
+                type="file"
+                name="photo"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden"
+              />
+            </label>
+
             <FormLabel
               name="username"
               value={username}

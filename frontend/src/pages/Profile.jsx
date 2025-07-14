@@ -73,7 +73,7 @@ function Profile() {
     try {
       const response = await axios.put(
         `http://localhost:4000/edit?id=${userId}`,
-        { username: username, email: email, status: status, image: image },
+        { username, email, status, image },
         { withCredentials: true }
       );
 
