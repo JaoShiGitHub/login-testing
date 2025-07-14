@@ -11,7 +11,7 @@ const css_button =
 
 function Profile() {
   const navigate = useNavigate();
-  const { logout, user } = useAuth();
+  const { logout, user, setIsAuthenticated } = useAuth();
   const { t } = useTranslation();
 
   const [userId, setUserId] = useState(null);
@@ -130,6 +130,11 @@ function Profile() {
     }
   };
 
+  const handleFinishDeleteAcc = () => {
+    setIsAuthenticated(false);
+    navigate(`/login`);
+  };
+
   const handleLogout = async () => {
     await logout();
   };
@@ -244,7 +249,7 @@ function Profile() {
           Go back to{"  "}
           <button
             className="text-blue-500 font-bold ml-1"
-            onClick={handleLogout}
+            onClick={handleFinishDeleteAcc}
           >
             Login
           </button>
