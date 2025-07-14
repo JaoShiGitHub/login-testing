@@ -244,7 +244,7 @@ function Profile() {
           Go back to{"  "}
           <button
             className="text-blue-500 font-bold ml-1"
-            onClick={() => navigate("/login")}
+            onClick={handleLogout}
           >
             Login
           </button>
