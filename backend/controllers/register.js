@@ -1,18 +1,20 @@
 import { pool } from "../utils/db.js";
-import { readFile } from "fs/promises";
+// import { readFile } from "fs/promises";
 import path from "path";
 import bcrypt from "bcrypt";
 
 const register = async (req, res) => {
-  const { username, email, status } = req.body;
+  const { username, email, status, image } = req.body;
   const user = { password: req.body.password };
   // Encrypt the password
   const salt = await bcrypt.genSalt(10);
   const password = await bcrypt.hash(user.password, salt);
 
-  const imagePath = path.join(process.cwd(), "lili2.jpg");
-  console.log("Looking for image at:", imagePath);
-  const imageBuffer = await readFile(imagePath);
+  // const imagePath = path.join(process.cwd(), "lili2.jpg");
+  // console.log("Looking for image at:", imagePath);
+  // const imageBuffer = await readFile(imagePath);
+
+  const imageBuffer = Buffer.from(image.split(",")[1], "base64");
 
   try {
     await pool.query(
