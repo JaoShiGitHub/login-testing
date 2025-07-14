@@ -32,7 +32,7 @@ app.post("/register", [validate_register], register);
 app.post("/login", auth);
 app.get("/profile", authMiddleware, get_user);
 app.post("/logout", logout);
-app.put("/edit", edit_profile);
+app.put("/edit", authMiddleware, edit_profile);
 app.delete("/delete", delete_account);
 
 app.listen(port, () => {

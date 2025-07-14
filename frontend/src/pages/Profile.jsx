@@ -31,15 +31,14 @@ function Profile() {
   const [newImage, setNewImage] = useState(null);
 
   useEffect(() => {
-    get_userData(user.user.id);
-  }, [user]);
+    get_userData();
+  }, []);
 
   const get_userData = async (id) => {
     try {
-      const response = await axios.get(
-        `http://localhost:4000/profile?customer_id=${id}`,
-        { withCredentials: true }
-      );
+      const response = await axios.get(`http://localhost:4000/profile`, {
+        withCredentials: true,
+      });
 
       const user = response?.data?.user_data;
 

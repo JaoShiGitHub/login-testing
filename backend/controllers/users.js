@@ -1,11 +1,10 @@
 import { pool } from "../utils/db.js";
 
 const get_user = async (req, res) => {
-  const { customer_id } = req.query;
-
+  const userId = req.user.id;
   try {
     const user = await pool.query("SELECT * FROM users WHERE id = $1", [
-      customer_id,
+      userId,
     ]);
 
     const user_data = user.rows[0];

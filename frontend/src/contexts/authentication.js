@@ -11,7 +11,7 @@ function AuthProvider(props) {
 
   const checkAuth = async () => {
     try {
-      await axios.get(`http://localhost:4000/profile?customer_id=${user.id}`, {
+      await axios.get(`http://localhost:4000/profile`, {
         withCredentials: true,
       });
       setIsAuthenticated(true);
