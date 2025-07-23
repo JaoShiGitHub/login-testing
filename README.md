@@ -29,6 +29,9 @@ A project for testing full-stack development.
      
    * This gives you better security than storing the JWT in localStorage or sessionStorage.
 
+  ### <main> tag
+   * A web app can have more than one <main> tag, but there must be only one main element in a document. The <main> tag is meant to represent the main content of the document, and that main content should be unique
+
 ### Without withCredentials
    * Your browser will not send cookies to the backend, so the backend will think you're not logged in, even if the cookie is stored in the browser.
 
